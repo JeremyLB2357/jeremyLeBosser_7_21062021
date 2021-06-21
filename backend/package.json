@@ -1,0 +1,23 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "API permettant la communication avec la base de donnees",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JeremyLB2357/jeremyLeBosser_7_21062021.git"
+  },
+  "author": "JLB",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JeremyLB2357/jeremyLeBosser_7_21062021/issues"
+  },
+  "homepage": "https://github.com/JeremyLB2357/jeremyLeBosser_7_21062021#readme",
+  "dependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
