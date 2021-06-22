@@ -19,6 +19,8 @@
   "homepage": "https://github.com/JeremyLB2357/jeremyLeBosser_7_21062021#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "nodemon": "^2.0.7"
+    "mysql2": "^2.2.5",
+    "nodemon": "^2.0.7",
+    "sequelize": "^6.6.2"
   }
 }
