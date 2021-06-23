@@ -1,9 +1,5 @@
 const express = require('express');
-const { Sequelize } = require('sequelize');
-const sequelize = new Sequelize('groupomania', 'root', '', {
-    host: 'localhost',
-    dialect: 'mysql'
-});
+
 
 const app = express();
 
@@ -11,6 +7,7 @@ const userRoutes = require('./routes/users');
 const feedRoutes = require('./routes/feed');
 const profileRoutes = require('./routes/profile');
 
+/*
 async function connectBDD() {
     try {
         await sequelize.authenticate();
@@ -21,6 +18,7 @@ async function connectBDD() {
 };
 
 connectBDD();
+*/
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
