@@ -7,7 +7,7 @@ const { v4: uuidv4 } = require('uuid');
 const { sequelize, User } = require('../models');
 
 exports.signup = (req, res, next) => {
-    bcrypt.hash(req.body.user.password, 10)
+    bcrypt.hash(req.body.user.password, 2)
     .then( hash => {
         const encryptEmail = cryptoJS.AES.encrypt(req.body.user.email, 'RANDOM_SECRET').toString();
         User.create({
