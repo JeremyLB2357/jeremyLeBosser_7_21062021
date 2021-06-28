@@ -1,18 +1,18 @@
 'use strict';
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Comments', {
+  up: async (queryInterface, DataTypes) => {
+    await queryInterface.createTable('comments', {
       commentId: {
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true
       },
       content: {
-        type: Sequelize.TEXT
+        type: DataTypes.TEXT
       },
       userId: {
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
         allowNull: false,
         references: {
             model: 'Users',
@@ -20,7 +20,7 @@ module.exports = {
         }
       },
       articleId: {
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
         allowNull: false,
         references: {
             model: 'Articles',
@@ -29,15 +29,15 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: DataTypes.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: DataTypes.DATE
       }
     });
   },
-  down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Comments');
+  down: async (queryInterface, DataTypes) => {
+    await queryInterface.dropTable('comments');
   }
 };

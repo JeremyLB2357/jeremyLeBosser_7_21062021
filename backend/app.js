@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 
 
 const app = express();
@@ -6,33 +7,34 @@ const app = express();
 const userRoutes = require('./routes/users');
 const feedRoutes = require('./routes/feed');
 const profileRoutes = require('./routes/profile');
+const testRoutes = require('./routes/test');
 
-/*
-async function connectBDD() {
+
+const connectBDD = require('./src/database/connection');
+
+async function checkConnectionBDD() {
     try {
         await sequelize.authenticate();
-        console.log('connection is great');
+        console.log('Database connected');
     } catch (error) {
         console.error('unable to connect to the database', error);
     }
 };
+checkConnectionBDD();
 
-connectBDD();
-*/
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
-  });
+});
 
-app.use('/auth', userRoutes);
-app.use('/feed', feedRoutes);
-app.use('/profile', profileRoutes);
+app.use('/api/auth', userRoutes);
+app.use('/api/feed', feedRoutes);
+app.use('/api/profile', profileRoutes);
 
-/*app.use((req, res) => {
-    res.json({ message: 'votre requête a bien été reçue !' });
-});*/
 
 module.exports = app;

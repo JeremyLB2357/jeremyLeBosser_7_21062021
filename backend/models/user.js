@@ -9,13 +9,21 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
+    static associate({ Article, Comment }) {
       // define association here
-      this.hasMany(models.Article, {as: 'articles' });
-      this.hasMany(models.Comment, {as: 'comments' });
+      this.hasMany(Article, { foreignKey: 'userId', as: 'articles' });
+      this.hasMany(Comment, {as: 'comments' });
+    }
+
+    toJSON(){
+      return { ...this.get(), userId: undefined };
     }
   };
   User.init({
+    uuid: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV
+    },
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -23,25 +31,48 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true
     },
     lastName: { 
-      type: DataTypes.STRING 
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: { msg: 'User must have a lastname' },
+        notEmpty: { msg: 'Lastname must not be empty' }
+      } 
     },
     firstName: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: { msg: 'User must have a firstname' },
+        notEmpty: { msg: 'Firstname must not be empty' }
+      }
     },
     email: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: { msg: 'User must have an email' },
+        notEmpty: { msg: 'Email must not be empty' },
+      }
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: { msg: 'User must have a password' },
+        notEmpty: { msg: 'Password must not be empty' }
+      }
     },
-    pseudo: {
+    role: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true
+      validate: {
+        notNull: { msg: 'User must have an email' },
+        notEmpty: { msg: 'Email must not be empty' }
+      }
     }
   }, {
     sequelize,
+    tableName: 'users',
     modelName: 'User',
   });
   return User;

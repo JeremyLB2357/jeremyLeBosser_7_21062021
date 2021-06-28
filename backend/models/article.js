@@ -9,20 +9,26 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
+    static associate({ User, Comment }) {
       // define association here
-      this.belongsTo(models.User, {foreignKey: 'userId', as: 'user'});
+      this.belongsTo(User, {foreignKey: 'userId', as: 'user' });
+      this.hasMany(Comment, {foreignKey: 'articleId', as: 'comments' })
+    }
+
+    toJSON(){
+      return { ...this.get(), userId: undefined, articleId: undefined };
     }
   };
   Article.init({
+    uuid: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV
+    },
     articleId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       autoIncrement: true,
       primaryKey: true
-    },
-    title: { 
-      type: DataTypes.STRING 
     },
     content: {
       type: DataTypes.TEXT
@@ -30,13 +36,10 @@ module.exports = (sequelize, DataTypes) => {
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
-          model: User,
-          key: 'userId'
-      }
     }
   }, {
     sequelize,
+    tableName: 'articles',
     modelName: 'Article',
   });
   return Article;
