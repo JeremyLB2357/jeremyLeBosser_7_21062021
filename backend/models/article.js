@@ -1,7 +1,6 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Article extends Model {
     /**
@@ -11,8 +10,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({ User, Comment }) {
       // define association here
-      this.belongsTo(User, {foreignKey: 'userId', as: 'user' });
-      this.hasMany(Comment, {foreignKey: 'articleId', as: 'comments' })
+      this.belongsTo(User, {foreignKey: 'userId' });
+      this.hasMany(Comment, {foreignKey: 'articleId' })
     }
 
     toJSON(){

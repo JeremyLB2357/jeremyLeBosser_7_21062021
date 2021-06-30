@@ -1,8 +1,6 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
-const { showComments } = require('../controllers/feed');
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Comment extends Model {
     /**
@@ -12,15 +10,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({ User, Article }) {
       // define association here
-      this.belongsTo(User, {foreignKey: 'userId', as: 'user'});
-      this.belongsTo(Article, {foreignKey: 'articleId', as: 'article'});
+      this.belongsTo(User, {foreignKey: 'userId' });
+      this.belongsTo(Article, {foreignKey: 'articleId' });
     }
   };
   Comment.init({
-    uuid: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV
-    },
     commentId: {
       type: DataTypes.INTEGER,
       allowNull: false,

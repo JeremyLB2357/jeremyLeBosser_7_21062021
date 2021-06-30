@@ -23,7 +23,6 @@ exports.delete = (req, res, next) => {
 
 exports.modify = (req, res, next) => {
     const userUpdated = { ...req.body.user };
-    console.log('userUpdated :' + userUpdated);
     if (!userUpdated.password) {
         User.update(userUpdated, { where: { uuid: req.query.id } })
         .then(() => res.status(200).json({ message: 'modification faite' }))

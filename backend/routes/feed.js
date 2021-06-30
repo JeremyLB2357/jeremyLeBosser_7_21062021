@@ -3,11 +3,12 @@ const router = express.Router();
 
 const feedCtrl = require('../controllers/feed');
 
-router.post('/post/publish', feedCtrl.publish);
-router.post('/post/comment', feedCtrl.addComment);
-router.delete('/post/:id', feedCtrl.delete);
-router.get('/post/all', feedCtrl.showAll);
-router.get('/post/comment/:id', feedCtrl.showComments);
+router.post('/publish', feedCtrl.publish);
+router.post('/comment', feedCtrl.addComment);
+router.delete('/article', feedCtrl.deleteArticle);
+router.delete('/comment', feedCtrl.deleteComment);
+router.get('/all', feedCtrl.showAll);
+router.get('/', feedCtrl.showOne);
 
 
 module.exports = router;

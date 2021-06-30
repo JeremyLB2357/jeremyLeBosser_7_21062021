@@ -2,8 +2,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 
+
 const app = express();
 
+
+//importation des routes
 const userRoutes = require('./routes/users');
 const feedRoutes = require('./routes/feed');
 const profileRoutes = require('./routes/profile');
@@ -31,6 +34,8 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
 });
+
+
 
 app.use('/api/auth', userRoutes);
 app.use('/api/feed', feedRoutes);

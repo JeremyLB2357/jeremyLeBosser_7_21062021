@@ -1,3 +1,5 @@
 ->  question sur le format JSON : pourquoi dois-je rajouter un user ?
 
 -> req.query vs req.params ?
+
+-> dotenv

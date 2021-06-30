@@ -4,10 +4,10 @@ const cryptoJS = require('crypto-js');
 const { v4: uuidv4 } = require('uuid');
 
 
-const { sequelize, User } = require('../models');
+const { User } = require('../models');
 
 exports.signup = (req, res, next) => {
-    bcrypt.hash(req.body.user.password, 2)
+    bcrypt.hash(req.body.user.password, 10)
     .then( hash => {
         const encryptEmail = cryptoJS.AES.encrypt(req.body.user.email, 'RANDOM_SECRET').toString();
         User.create({
@@ -23,7 +23,7 @@ exports.signup = (req, res, next) => {
         })
         .catch(error => res.status(400).json({ error }));
     })
-    .catch(error => res.status(500).json({ error }));
+    .catch(error => res.status(500).json({ error: error }));
 };
 
 exports.login = (req, res, next) => {
