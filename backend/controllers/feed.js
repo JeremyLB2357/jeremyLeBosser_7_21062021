@@ -10,10 +10,13 @@ exports.showAll = (req, res, next) => {
 };
 
 exports.publish = (req, res, next) => {
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
+    const userId = decodedToken.userId;
     Article.create({
         title: req.body.title,
         content: req.body.content,
-        userId: 2,      //aller chercher l'id dans le token
+        userId: userId,      //aller chercher l'id dans le token
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     })
     .then(() => res.status(200).json({ message: 'publication faite'}))
@@ -37,10 +40,13 @@ exports.deleteArticle = (req, res, next) => {
 };
 
 exports.addComment = (req, res, next) => {
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
+    const userId = decodedToken.userId;
     console.log('je commente un post');
     Comment.create({
         content: req.body.content,
-        userId: req.body.userId, //aller chercher l'id dans le token
+        userId: userId, //aller chercher l'id dans le token
         articleId: req.body.articleId
     })
     .then(() => res.status(200).json({ message: 'commentaire ajouté'}))

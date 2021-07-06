@@ -1,8 +1,8 @@
 reste à faire :
 -> afficher les post du profile spécifique
--> poster un article, il faut aller chercher l'id dans le token
--> poster un commentaire, il faut aller chercher l'id dans le token
+
 
 -> faire la logique du like: pb pour stocker un array en bdd
 
--> faire la logique d'ajout de fichier pour les posts
+-> ajouter la cascade lors de la suppression d'un article. tous les commentaires associés doivent être supprimés
+
