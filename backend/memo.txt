@@ -1,5 +1,8 @@
-->  question sur le format JSON : pourquoi dois-je rajouter un user ?
+reste à faire :
+-> afficher les post du profile spécifique
+-> poster un article, il faut aller chercher l'id dans le token
+-> poster un commentaire, il faut aller chercher l'id dans le token
 
--> req.query vs req.params ?
+-> faire la logique du like: pb pour stocker un array en bdd
 
--> dotenv
+-> faire la logique d'ajout de fichier pour les posts

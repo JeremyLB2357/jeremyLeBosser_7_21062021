@@ -1,19 +1,17 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const cryptoJS = require('crypto-js');
-const { v4: uuidv4 } = require('uuid');
 
 
 const { User } = require('../models');
 
 exports.signup = (req, res, next) => {
-    bcrypt.hash(req.body.user.password, 10)
+    bcrypt.hash(req.body.password, 10)
     .then( hash => {
-        const encryptEmail = cryptoJS.AES.encrypt(req.body.user.email, 'RANDOM_SECRET').toString();
+        const encryptEmail = cryptoJS.AES.encrypt(req.body.email, 'RANDOM_SECRET').toString();
         User.create({
-            uuid: uuidv4(),
-            lastName: req.body.user.lastName,
-            firstName: req.body.user.firstName,
+            lastName: req.body.lastName,
+            firstName: req.body.firstName,
             email: encryptEmail,
             password: hash,
             role: 'user'
@@ -33,7 +31,7 @@ exports.login = (req, res, next) => {
             const bytes = cryptoJS.AES.decrypt(users[i].email, 'RANDOM_SECRET');
             const originalEmail = bytes.toString(cryptoJS.enc.Utf8);
             //si l'email saisie est dans la BDD, on retourne l'email crypté de l'user trouvé
-            if (originalEmail == req.body.user.email) {
+            if (originalEmail == req.body.email) {
                 return users[i].email;
             }
         }
@@ -46,7 +44,7 @@ exports.login = (req, res, next) => {
                 return res.status(401).json({ error: 'utilisateur inconnu !' });
             } else {
                 //on vérifie le mot de passe renseigné
-                bcrypt.compare(req.body.user.password, user.password)
+                bcrypt.compare(req.body.password, user.password)
                     .then( valid => {
                         if (!valid) {
                             return res.status(401).json({ error: 'mot de passe incorrect !' });

@@ -4,8 +4,8 @@ const router = express.Router();
 const userCtrl = require('../controllers/users');
 const test = require('../middlewares/capture');
 
-router.post('/signup', userCtrl.signup);
-router.post('/login', userCtrl.login);
+router.post('/signup', test, userCtrl.signup);
+router.post('/login', test, userCtrl.login);
 
 
 module.exports = router;

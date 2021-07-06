@@ -31,6 +31,12 @@ module.exports = (sequelize, DataTypes) => {
     articleId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+    },
+    usersLiked: {
+      type: DataTypes.TEXT
+    },
+    likes: {
+      type: DataTypes.INTEGER
     }
   }, {
     sequelize,

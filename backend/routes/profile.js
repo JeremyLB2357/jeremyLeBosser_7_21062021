@@ -2,11 +2,12 @@ const express = require('express');
 const router = express.Router();
 
 const profileCtrl = require('../controllers/profile');
+const test = require('../middlewares/capture');
 
-router.post('/me', profileCtrl.modify);
-router.get('/me/myposts', profileCtrl.showMyPosts);
-router.get('/me', profileCtrl.show);
-router.delete('/me', profileCtrl.delete);
+router.put('/:id', test, profileCtrl.modify);
+router.get('/me/myposts', test, profileCtrl.showMyPosts);
+router.get('/:id', test, profileCtrl.show);
+router.delete('/:id', test, profileCtrl.delete);
 
 
 module.exports = router;

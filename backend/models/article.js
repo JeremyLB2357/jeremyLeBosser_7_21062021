@@ -19,15 +19,15 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Article.init({
-    uuid: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV
-    },
     articleId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       autoIncrement: true,
       primaryKey: true
+    },
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false
     },
     content: {
       type: DataTypes.TEXT
@@ -35,6 +35,15 @@ module.exports = (sequelize, DataTypes) => {
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+    },
+    imageUrl: {
+      type: DataTypes.STRING
+    },
+    usersLiked: {
+      type: DataTypes.TEXT
+    },
+    likes: {
+      type: DataTypes.INTEGER
     }
   }, {
     sequelize,
