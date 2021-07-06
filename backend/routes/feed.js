@@ -1,12 +1,15 @@
 const express = require('express');
 const router = express.Router();
 
-const feedCtrl = require('../controllers/feed');
+const multer = require('../middlewares/multer-config');
 
-router.post('/publish', feedCtrl.publish);
+const feedCtrl = require('../controllers/feed');
+const test = require('../middlewares/capture');
+
+router.post('/publish', multer, test, feedCtrl.publish);
 router.post('/comment', feedCtrl.addComment);
 router.post('/article/like/:id', feedCtrl.likeArticle);
-router.post('/comment/like/:id', feedCtrl.likeComment);
+//router.post('/comment/like/:id', feedCtrl.likeComment);
 router.delete('/:id', feedCtrl.deleteArticle);
 router.delete('/comment/:id', feedCtrl.deleteComment);
 router.get('/all', feedCtrl.showAll);

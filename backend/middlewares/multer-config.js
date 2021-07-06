@@ -8,7 +8,7 @@ const MIME_TYPES = {
 
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
-        callback(null, 'images');
+        callback(null, 'public/images');
     },
     filename: (req, file, callback) => {
         //remplace les espaces par underscore
@@ -20,4 +20,4 @@ const storage = multer.diskStorage({
     }
 });
 
-module.exports = multer({storage: storage}).array('image');
+module.exports = multer({storage: storage}).single('image');
