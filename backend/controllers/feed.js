@@ -1,5 +1,5 @@
 
-const { v4: uuidv4 } = require('uuid');
+const fs = require('fs');
 
 const { Article, Comment } = require('../models');
 
@@ -13,18 +13,27 @@ exports.publish = (req, res, next) => {
     Article.create({
         title: req.body.title,
         content: req.body.content,
-        userId: 2   //aller chercher l'id dans le token
+        userId: 2,      //aller chercher l'id dans le token
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     })
     .then(() => res.status(200).json({ message: 'publication faite'}))
     .catch(error => res.status(400).json(error))
 };
 
 exports.deleteArticle = (req, res, next) => {
-    Article.destroy({ where: { articleId: req.params.id }})
-    .then(() => {
-        res.status(200).json({ message: 'suppression faite' });
+    Article.findOne({ where: { articleId: req.params.id} })
+    .then(article => {
+        const filename = article.imageUrl.split('/images/')[1];
+        Article.destroy({ where: { articleId: req.params.id }})
+        .then(() => {
+            fs.unlink(`images/${filename}`, () => {
+                res.status(200).json({ message: 'suppression faite' });
+            })
+        })
+        .catch(error => res.status(400).json(error));
     })
-    .catch(error => res.status(400).json(error));
+    .catch(error => res.status(404).json(error));
+    
 };
 
 exports.addComment = (req, res, next) => {
