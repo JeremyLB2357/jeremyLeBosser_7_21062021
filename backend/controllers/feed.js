@@ -66,7 +66,7 @@ exports.deleteComment = (req, res, next) => {
 exports.likeArticle = (req, res, next) => {
     if (req.body.like == 0) {
         console.log('le post me laisse indifférent');
-        Article.findOne({ where: { articleId: req.params.id} })   //on va chercher les infos de la sauce
+        Article.findOne({ where: { articleId: req.params.id} })
             .then(article => {
                 const articleUpdated = article;
                 let arrayOfLikedUsers = article.usersLiked;

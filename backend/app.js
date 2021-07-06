@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
+const helmet = require('helmet');
+const path = require('path');
 
 
 const app = express();
@@ -12,7 +13,7 @@ const feedRoutes = require('./routes/feed');
 const profileRoutes = require('./routes/profile');
 const testRoutes = require('./routes/test');
 
-
+//connection à la BDD
 const connectBDD = require('./src/database/connection');
 
 async function checkConnectionBDD() {
@@ -25,9 +26,13 @@ async function checkConnectionBDD() {
 };
 checkConnectionBDD();
 
+//middleware permettant de prévenir les attaques XSS
+app.use(helmet());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+//middleware qui permet d'accéder à notre API peut importe l'origine
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
@@ -36,7 +41,7 @@ app.use((req, res, next) => {
 });
 
 
-
+app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/auth', userRoutes);
 app.use('/api/feed', feedRoutes);
 app.use('/api/profile', profileRoutes);
