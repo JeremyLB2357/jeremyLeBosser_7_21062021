@@ -26,3 +26,9 @@ ________________________________________________________________________________
 2 choix possibles :
 -> l'accès à un forum où les salariés publient des contenus multimédias doit être présent
 -> l'accès à un forum où les salariés publient des textes doit être présent
+
+____________________________________________________________________________________________________________
+
+Pour lancer le projet :
+->backend nodemon serve
+->fortend npm run serve

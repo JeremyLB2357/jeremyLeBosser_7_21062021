@@ -50,9 +50,9 @@ exports.login = (req, res, next) => {
                             return res.status(401).json({ error: 'mot de passe incorrect !' });
                         } else {    //renvoie l'identifiant userID depuis la BDD et un jeton Web JSON signé contenant userID
                             res.status(200).json({
-                                userId: user._id,
+                                userId: user.userId,
                                 token: jwt.sign(
-                                    { userId: user._id },
+                                    { userId: user.userId },
                                     'RANDOM_TOKEN_SECRET',
                                     { expiresIn: '24h' }
                                 )
