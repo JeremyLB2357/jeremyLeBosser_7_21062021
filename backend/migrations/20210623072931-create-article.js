@@ -2,18 +2,19 @@
 module.exports = {
   up: async (queryInterface, DataTypes) => {
     await queryInterface.createTable('Articles', {
-      uuid: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV
-      },
       articleId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true
       },
+      title: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
       content: {
-        type: DataTypes.TEXT
+        type: DataTypes.TEXT,
+        allowNull: false
       },
       userId: {
         type: DataTypes.INTEGER,
@@ -22,6 +23,15 @@ module.exports = {
             model: 'Users',
             key: 'userId'
         }
+      },
+      imageUrl: {
+        type: DataTypes.STRING
+      },
+      usersLiked: {
+        type: DataTypes.TEXT
+      },
+      likes: {
+        type: DataTypes.INTEGER
       },
       createdAt: {
         allowNull: false,

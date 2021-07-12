@@ -1,5 +1,8 @@
-->  question sur le format JSON : pourquoi dois-je rajouter un user ?
+reste à faire :
+-> afficher les post du profile spécifique
 
--> req.query vs req.params ?
 
--> dotenv
+-> faire la logique du like: pb pour stocker un array en bdd
+
+-> ajouter la cascade lors de la suppression d'un article. tous les commentaires associés doivent être supprimés
+

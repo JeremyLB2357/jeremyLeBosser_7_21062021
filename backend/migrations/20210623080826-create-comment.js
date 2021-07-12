@@ -27,6 +27,12 @@ module.exports = {
             key: 'articleId'
         }
       },
+      usersLiked: {
+        type: DataTypes.TEXT
+      },
+      likes: {
+        type: DataTypes.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE
