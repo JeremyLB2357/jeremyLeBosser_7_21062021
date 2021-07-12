@@ -1,18 +1,48 @@
 <template>
-    <p>Pour vous inscrire, merci de renseigner le formulaire suivant</p>
     <form action="" class="signup">
+        <label for="lastname">Votre nom</label>
+        <input type="text" name="lastname" id="lastname" v-model="lastName">
+        <label for="firstname">Votre prénom</label>
+        <input type="text" name="firstname" id="firstname" v-model="firstName">
         <label for="email">Votre adresse email</label>
-        <input type="email" name="email" id="email">
+        <input type="email" name="email" id="email" v-model="email">
         <label for="password">Votre mot de passe</label>
-        <input type="text" name="password" id="password">
-        <button>S'inscrire</button>
+        <input type="text" name="password" id="password" v-model="password">
+        <button id="btn-signup" v-on:click="sendInscription">S'inscrire</button>
     </form>
 </template>
 
 <script>
+const axios = require('axios').default;
+
 export default {
-    name: 'Signup'
+    name: 'Signup',
+    data() {
+        return{
+            lastName: '',
+            firstName: '',
+            email: '',
+            password: '',
+            info: ''
+        }
+    },
+    methods: {
+        sendInscription() {
+            alert(this.lastName + ', vos informations ont bien été enregistrée !');
+            axios.post('http://localhost:3000/api/auth/signup', {
+                lastName: this.lastName,
+                firstName: this.firstName,
+                email: this.email,
+                password: this.password
+            })
+            .then(response => {
+                this.info = response;
+            })
+            .catch(error => console.log(error))
+        }
+    }
 }
+
 </script>
 
 <style scoped lang="scss">
