@@ -1,0 +1,2 @@
+faire l'installation de Vuex
+faire le cours sur Vuex

@@ -20,8 +20,7 @@ export default {
         }
     },
     mounted() {
-        axios
-            .get('http://localhost:3000/api/profile/me?id=67bb971a-673b-4240-9b1d-67080d4dc915')
+        axios.get('http://localhost:3000/api/profile/me?id=67bb971a-673b-4240-9b1d-67080d4dc915')
             .then(response => (this.info = response))
     }
 }

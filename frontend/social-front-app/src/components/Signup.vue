@@ -1,5 +1,5 @@
 <template>
-    <form action="" class="signup">
+    <form @submit.prevent="sendInscription">
         <label for="lastname">Votre nom</label>
         <input type="text" name="lastname" id="lastname" v-model="lastName">
         <label for="firstname">Votre prénom</label>
@@ -8,7 +8,7 @@
         <input type="email" name="email" id="email" v-model="email">
         <label for="password">Votre mot de passe</label>
         <input type="text" name="password" id="password" v-model="password">
-        <button id="btn-signup" v-on:click="sendInscription">S'inscrire</button>
+        <button id="btn-signup">S'inscrire</button>
     </form>
 </template>
 
