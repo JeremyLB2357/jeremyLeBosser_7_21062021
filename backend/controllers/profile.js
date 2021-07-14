@@ -7,7 +7,11 @@ const { sequelize, User } = require('../models');
 exports.show = (req, res, next) => {
     User.findOne({ where: { userId: req.params.id}})
     .then(user => {
-        res.status(200).json(user);
+        const bytes = cryptoJS.AES.decrypt(user.email, 'RANDOM_SECRET');
+        const originalEmail = bytes.toString(cryptoJS.enc.Utf8);
+        const response = user;
+        response.email = originalEmail;
+        res.status(200).json(response);
     })
     .catch(error => res.status(404).json({ error: error }));
 };

@@ -1,2 +1,2 @@
-faire l'installation de Vuex
-faire le cours sur Vuex
+problème lors de la redirection après la création de compte.
+login fail avec l'erreur "utilisateur inconnu 1"
