@@ -68,7 +68,7 @@ export default {
                 email: this.email,
                 password: this.password
             })
-            .then(this.$router.push('/accueil'))
+            .then(this.$router.push('/feed'))
         }
     }
 }
