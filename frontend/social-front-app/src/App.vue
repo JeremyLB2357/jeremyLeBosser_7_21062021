@@ -8,6 +8,15 @@
 </template>
 
 <style lang="scss">
+$color1: #D68FD6;
+$color-background-item: #DEFFF2;
+$color3: #464F51;
+$color-police: #000009;
+$color2: #0FF4C6;
+
+body {
+  background-color: $color3;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -28,4 +37,5 @@
     }
   }
 }
+
 </style>

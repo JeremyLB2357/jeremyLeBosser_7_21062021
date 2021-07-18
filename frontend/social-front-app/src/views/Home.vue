@@ -17,3 +17,12 @@ export default {
   }
 }
 </script>
+
+<style scoped lang="scss">
+$color1: #D68FD6;
+$color-background-item: #DEFFF2;
+$color3: #464F51;
+$color-police: #000009;
+$color2: #0FF4C6;
+
+</style>
