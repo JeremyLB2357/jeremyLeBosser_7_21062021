@@ -27,13 +27,14 @@ body {
 
 #nav {
   padding: 30px;
+  color: $color2;
 
   a {
     font-weight: bold;
-    color: #2c3e50;
+    color: $color2;
 
     &.router-link-exact-active {
-      color: #42b983;
+      color: $color1;
     }
   }
 }

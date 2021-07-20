@@ -12,7 +12,10 @@
           <button class="btn" @click="postArticle">Poster !</button>
         </div>
     <div v-for="item in articles" :key="item.articleId">
-      <Article v-bind:title="item.title" v-bind:content="item.content" v-bind:user="item.user"/>
+      <Article v-bind:title="item.title" v-bind:content="item.content" v-bind:user="item.user" v-bind:date="item.updatedAt" v-bind:like="item.likes"/>
+      <div v-for="elem in item.Comments" :key="elem.commentId">
+        <Comment v-bind:content="elem.content" v-bind:user="elem.user" v-bind:date="elem.updatedAt" v-bind:like="elem.likes"/>
+      </div>
     </div>
     
   
@@ -21,7 +24,9 @@
 
 <script>
 // @ is an alias to /src
-import Article from "../components/Article.vue"
+import Article from "../components/Article.vue";
+import Comment from "../components/Comment.vue";
+
 const axios = require('axios');
 
 const instance = axios.create({
@@ -37,7 +42,8 @@ export default {
     }
   },
   components: {
-    Article
+    Article,
+    Comment
   },
   methods: {
     fetchArticles(){
@@ -46,6 +52,7 @@ export default {
         for (let i in response.data){
           this.articles.push(response.data[i]);
         }
+        console.log(this.articles[0].Comments[0].content);
       })
       .catch(error => console.log(error))
     },
