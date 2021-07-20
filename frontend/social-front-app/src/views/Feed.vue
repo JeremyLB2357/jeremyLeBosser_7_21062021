@@ -62,7 +62,15 @@ export default {
       .catch(error => console.log(error))
     }
   },
-  beforeMount() {
+  created() {
+    
+  },
+  mounted() {
+    if (this.$store.state.user.userId == -1) {
+            this.$router.push('/');
+            return ;
+        }
+    instance.defaults.headers.common['Authorization'] = 'Bearer ' + JSON.parse(localStorage.getItem('user')).token;
     this.fetchArticles();
   }
 }

@@ -5,6 +5,25 @@
         <div>
             <button class="btn" @click="changePassword">modifier vos infos</button>
         </div>
+        <div v-if="modify == true">
+            <div class="input_content">
+                <label for="newLastName">Nom: </label>
+                <input type="text" v-model="newLastName" name="newLastName" id="newLastName">
+            </div>
+            <div class="input_content">
+                <label for="newFirstName">Prénom: </label>
+                <input type="text" v-model="newFirstName" name="newFirstName" id="newFirstName">
+            </div>
+            <div class="input_content">
+                <label for="newEmail">Email: </label>
+                <input type="text" v-model="newEmail" name="newEmail" id="newEmail">
+            </div>
+            <div class="input_content">
+                <label for="newPassword">Mot de passe: </label>
+                <input type="text" v-model="newPassword" name="newPassword" id="newPassword">
+            </div>
+            <button class="btn" @click="updateProfile">Envoyer les modifications</button>
+        </div>
         <div>
             <button class="btn" @click="disconnect">Se déconnecter</button>
         </div>
@@ -25,8 +44,12 @@ export default {
         return {
             lastName: '',
             firstName: '',
-            email: ''
-
+            email: '',
+            modify: false,
+            newLastName: '',
+            newFirstName: '',
+            newEmail: '',
+            newPassword: ''
         }
     },
     mounted() {
@@ -34,7 +57,7 @@ export default {
             this.$router.push('/');
             return ;
         }
-        instance.defaults.headers.common['Authorization'] = this.$store.state.user.token;
+        instance.defaults.headers.common['Authorization'] = 'Bearer ' + JSON.parse(localStorage.getItem('user')).token;
         instance.get(`/profile/${this.$store.state.user.userId}`)
         .then(response => {
             this.lastName = response.data.lastName;
@@ -48,6 +71,24 @@ export default {
         disconnect(){
             this.$store.dispatch('logout')
             .then(this.$router.push('/'))
+        },
+        changePassword(){
+            if (this.modify == false) {
+                this.modify = true;
+            } else {
+                this.modify = false;
+            }
+        },
+        updateProfile(){
+            const newUser = {
+                lastName: this.newLastName,
+                firstName: this.newFirstName,
+                email: this.newEmail,
+                password: this.newPassword
+            }
+            instance.put(`/profile/${this.$store.state.user.userId}`, {
+                newUser
+            })
         }
     }
 }
@@ -79,5 +120,8 @@ $color2: #0FF4C6;
         color: $color1;
         cursor: pointer;
     }
+}
+.input_content {
+  margin-bottom: 0.5rem;
 }
 </style>
