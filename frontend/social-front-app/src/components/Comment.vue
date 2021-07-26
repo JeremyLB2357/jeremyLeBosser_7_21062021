@@ -1,14 +1,51 @@
 <template>
     <div class="comment">
         <p>{{ content }}</p>
-        <cite>rédigé par {{ user }} le {{ date }}</cite><span>- like {{ like }}</span>
+        <cite>rédigé par {{ userComment }} le {{ date }}</cite><span>- like {{ likes }}</span>
+        <button @click="like">logo jm</button>
+        <button v-if="userComment == user.userId" @click="cancel">suppr</button>
     </div>  
 </template>
 
 <script>
+const axios = require('axios');
+
+const instance = axios.create({
+  baseURL: 'http://localhost:3000/api/feed/'
+})
+
+import { mapState } from 'vuex';
+
 export default {
     name: 'Comment',
-    props: ['content', 'user', 'date', 'like']
+    props: ['commentId', 'content', 'userComment', 'date', 'likes'],
+    data() {
+        return {
+            userlike: false
+        }
+    },
+    computed: {
+        ...mapState(['user'])
+    },
+    methods: {
+        like(){
+            if (this.userlike == true) {
+                instance.post('/comment/like/' + this.commentId, {
+                    like: 0
+                })
+            }
+            if (this.userlike == false) {
+                instance.post('/comment/like/' + this.commentId, {
+                    like: 1
+                })
+            }
+        },
+        cancel(){
+            instance.delete('comment/' + this.commentId)
+            .then (alert('suppression réussie'))
+            .catch (error => console.log(error))
+        }
+    }
 }
 </script>
 
