@@ -1,15 +1,63 @@
 <template>
     <div class="article">
-        <h2>{{ title }} - like {{ like }}</h2>
+        <h2>{{ title }} - like {{ likes }}</h2>
         <p>{{ content }}</p>
-        <cite>rédigé par {{ user }} le {{ date }}</cite>
+        <cite>rédigé par {{ userArticle }} le {{ date }}</cite>
+        <button @click="like">logo jm</button>
+        <button v-if="userArticle == user.userId" @click="cancel">suppr</button>
+        <div class="form">
+            <p>Envie de commenter quelque chose ?</p>
+            <div class="input_content">
+                <textarea v-model="newComment.content" name="new_com" id="new_com"></textarea>
+            </div>
+          <button class="btn" @click="commentArticle">Commentez !</button>
+    </div>
     </div>
 </template>
 
 <script>
+const axios = require('axios');
+
+const instance = axios.create({
+  baseURL: 'http://localhost:3000/api/feed/'
+})
+
+import { mapState } from 'vuex';
+
 export default {
     name: 'Article',
-    props: ['title', 'content', 'user', 'date', 'like']
+    props: ['articleId', 'title', 'content', 'userArticle', 'date', 'likes'],
+    data() {
+        return {
+            userlike: false,
+            newComment : { content: 'Votre commentaire ici', articleId: this.articleId }
+        }
+    },
+    computed: {
+        ...mapState(['user'])
+    },
+    methods: {
+        like(){
+            if (this.userlike == true) {
+                instance.post('/article/like/' + this.articleId, {
+                    like: 0
+                })
+            }
+            if (this.userlike == false) {
+                instance.post('/article/like/' + this.articleId, {
+                    like: 1
+                })
+            }
+        },
+        cancel(){
+            instance.delete('article/' + this.articleId)
+            .then (alert('suppression réussie'))
+            .catch (error => console.log(error))
+        },
+        commentArticle(){
+            instance.post('comment/', this.newComment)
+        }
+    }
 }
 </script>
 

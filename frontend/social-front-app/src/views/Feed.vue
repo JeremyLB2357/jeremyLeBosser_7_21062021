@@ -12,9 +12,9 @@
           <button class="btn" @click="postArticle">Poster !</button>
         </div>
     <div v-for="item in articles" :key="item.articleId">
-      <Article v-bind:title="item.title" v-bind:content="item.content" v-bind:user="item.user" v-bind:date="item.updatedAt" v-bind:like="item.likes"/>
+      <Article v-bind:articleId="item.articleId" v-bind:title="item.title" v-bind:content="item.content" v-bind:userArticle="item.user" v-bind:date="item.updatedAt" v-bind:likes="item.likes"/>
       <div v-for="elem in item.Comments" :key="elem.commentId">
-        <Comment v-bind:commentId="elem.commentId" v-bind:content="elem.content" v-bind:userComment="elem.user" v-bind:date="elem.updatedAt" v-bind:like="elem.likes"/>
+        <Comment v-bind:commentId="elem.commentId" v-bind:content="elem.content" v-bind:userComment="elem.user" v-bind:date="elem.updatedAt" v-bind:likes="elem.likes"/>
       </div>
     </div>
     
