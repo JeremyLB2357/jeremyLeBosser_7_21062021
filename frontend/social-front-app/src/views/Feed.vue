@@ -6,11 +6,14 @@
       <div class="input_content">
         <input type="text" v-model="newArticle.title" name="new_title" id="new_title">
       </div>
-          <div class="input_content">
-            <textarea v-model="newArticle.content" name="new_content" id="new_content"></textarea>
-          </div>
-          <button class="btn" @click="postArticle">Poster !</button>
-        </div>
+      <div class="input_content">
+        <textarea v-model="newArticle.content" name="new_content" id="new_content"></textarea>
+      </div>
+      <div>
+        <input type="file" name="image" id="image" accept="image/png, image/jpeg">
+      </div>
+      <button class="btn" @click="postArticle">Poster !</button>
+    </div>
     <div v-for="item in articles" :key="item.articleId">
       <Article v-bind:articleId="item.articleId" v-bind:title="item.title" v-bind:content="item.content" v-bind:userArticle="item.user" v-bind:date="item.updatedAt" v-bind:likes="item.likes"/>
       <div v-for="elem in item.Comments" :key="elem.commentId">
@@ -38,7 +41,8 @@ export default {
   data() {
     return {
       articles: [],
-      newArticle: { title: 'Mon titre', content: 'Que voulez-vous poster ?' }
+      newArticle: { title: '', content: '' },
+      file: ''
     }
   },
   components: {
@@ -56,7 +60,15 @@ export default {
       .catch(error => console.log(error))
     },
     postArticle(){
-      instance.post('/publish', this.newArticle)
+      let formData = new FormData();
+      const imagefile = document.querySelector('#image');
+      const config = {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      }
+      formData.append('image', imagefile);
+      formData.append('title', this.newArticle.title);
+      formData.append('content', this.newArticle.content);
+      instance.post('/publish', formData, config)
       .then(this.$router.push('/feed'))
       .catch(error => console.log(error))
     }
@@ -71,6 +83,7 @@ export default {
         }
     instance.defaults.headers.common['Authorization'] = 'Bearer ' + JSON.parse(localStorage.getItem('user')).token;
     this.fetchArticles();
+    this.newArticle = { title: 'Mon titre', content: 'Que voulez-vous poster ?' }
   }
 }
 </script>
