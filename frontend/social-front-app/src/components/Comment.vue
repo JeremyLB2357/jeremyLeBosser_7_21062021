@@ -2,8 +2,8 @@
     <div class="comment">
         <p>{{ content }}</p>
         <cite>rédigé par {{ userComment }} le {{ date }}</cite><span>- like {{ likes }}</span>
-        <button @click="like">logo jm</button>
-        <button v-if="userComment == user.userId" @click="cancel">suppr</button>
+        <button @click="like"><i class="fas fa-heart"></i></button>
+        <button v-if="userComment == user.userId" @click="cancel"><i class="fas fa-trash-alt"></i></button>
     </div>  
 </template>
 

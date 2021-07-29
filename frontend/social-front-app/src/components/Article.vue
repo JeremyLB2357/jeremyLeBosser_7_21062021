@@ -3,10 +3,10 @@
         <h2>{{ title }} - like {{ likes }}</h2>
         <p>{{ content }}</p>
         <cite>rédigé par {{ userArticle }} le {{ date }}</cite>
-        <button @click="like">logo jm</button>
-        <button v-if="userArticle == user.userId" @click="cancel">suppr</button>
+        <button @click="like"><i class="fas fa-heart"></i></button>
+        <button v-if="userArticle == user.userId" @click="cancel"><i class="fas fa-trash-alt"></i></button>
         <div class="form">
-            <p>Envie de commenter quelque chose ?</p>
+            <p>Envie de commenter ?</p>
             <div class="input_content">
                 <textarea v-model="newComment.content" name="new_com" id="new_com"></textarea>
             </div>

@@ -47,7 +47,7 @@ export default {
         }
     },
     computed: {
-        ...mapState([status])
+        ...mapState(['status'])
     },
     methods: {
         switchToCreatAccount(){
@@ -72,7 +72,9 @@ export default {
                 email: this.email,
                 password: this.password
             })
-            .then(this.$router.push('/feed'))
+            .then(() => {
+                this.$router.push('/feed');
+            })
         }
     }
 }
