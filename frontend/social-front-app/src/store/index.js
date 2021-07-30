@@ -11,13 +11,14 @@ export default createStore({
     user: {
       userId: -1,
       token: ''
-    }
+    },
+    rigth: ''
   },
   mutations: {
     logUser(state, user){
       state.user = user;
       localStorage.setItem('user', JSON.stringify(user));
-      instance.defaults.headers.common['Authorization'] = user.token;
+      instance.defaults.headers.common['Authorization'] = 'BEARER ' + user.token;
     },
     unlogUser(state){
       state.user = { userId: -1, token: '' };
@@ -26,6 +27,9 @@ export default createStore({
     },
     setStatus(state, status){
       state.status = status;
+    },
+    giveAllRigth(state){
+      state.rigth = 'admin';
     }
   },
   actions: {
@@ -47,7 +51,9 @@ export default createStore({
       .then(response => {
         commit('setStatus', 'connected');
         commit('logUser', response.data);
-        console.log(response.data.token);
+        if(response.data.userId === 1){
+          commit('giveAllRigth');
+        }
       })
       .catch(error => {
         commit('setStatus', 'error_login');

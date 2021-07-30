@@ -4,7 +4,7 @@
         <p>{{ content }}</p>
         <cite>rédigé par {{ userArticle }} le {{ date }}</cite>
         <button @click="like"><i class="fas fa-heart"></i></button>
-        <button v-if="userArticle == user.userId" @click="cancel"><i class="fas fa-trash-alt"></i></button>
+        <button v-if="userArticle == user.userId || $store.state.rigth == 'admin'" @click="cancel"><i class="fas fa-trash-alt"></i></button>
         <div class="form">
             <p>Envie de commenter ?</p>
             <div class="input_content">
@@ -50,13 +50,18 @@ export default {
             }
         },
         cancel(){
-            instance.delete('article/' + this.articleId)
+            instance.delete('/article/' + this.articleId)
             .then (alert('suppression réussie'))
             .catch (error => console.log(error))
         },
         commentArticle(){
-            instance.post('comment/', this.newComment)
+            instance.post('/comment/', this.newComment)
+            .then(this.$forceUpdate())
+            .catch(error => console.log(error))
         }
+    },
+    mounted(){
+        instance.defaults.headers.common['Authorization'] = 'BEARER '+ this.user.token;
     }
 }
 </script>

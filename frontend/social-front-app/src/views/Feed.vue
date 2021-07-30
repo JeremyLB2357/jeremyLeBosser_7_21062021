@@ -10,14 +10,14 @@
         <textarea v-model="newArticle.content" name="new_content" id="new_content"></textarea>
       </div>
       <div>
-        <input type="file" name="image" id="image" accept="image/png, image/jpeg">
+        <input type="file" name="image" id="image" accept="image/png, image/jpeg" @change="uploadFile">
       </div>
       <button class="btn" @click="postArticle">Poster !</button>
     </div>
     <div v-for="item in articles" :key="item.articleId">
-      <Article v-bind:articleId="item.articleId" v-bind:title="item.title" v-bind:content="item.content" v-bind:userArticle="item.user" v-bind:date="item.updatedAt" v-bind:likes="item.likes"/>
+      <Article v-bind:articleId="item.articleId" v-bind:title="item.title" v-bind:content="item.content" v-bind:userArticle="item.userId" v-bind:date="item.updatedAt" v-bind:likes="item.likes"/>
       <div v-for="elem in item.Comments" :key="elem.commentId">
-        <Comment v-bind:commentId="elem.commentId" v-bind:content="elem.content" v-bind:userComment="elem.user" v-bind:date="elem.updatedAt" v-bind:likes="elem.likes"/>
+        <Comment v-bind:commentId="elem.commentId" v-bind:content="elem.content" v-bind:userComment="elem.userId" v-bind:date="elem.updatedAt" v-bind:likes="elem.likes"/>
       </div>
     </div>
     
@@ -59,18 +59,25 @@ export default {
       })
       .catch(error => console.log(error))
     },
+    uploadFile(event){
+      this.file = event.target.files[0];
+    },
     postArticle(){
-      let formData = new FormData();
-      const imagefile = document.querySelector('#image');
+      const formData = new FormData();
       const config = {
         headers: { 'Content-Type': 'multipart/form-data' }
       }
-      formData.append('image', imagefile);
+      formData.append('image', this.file);
       formData.append('title', this.newArticle.title);
       formData.append('content', this.newArticle.content);
+
       instance.post('/publish', formData, config)
       .then(this.$router.push('/feed'))
       .catch(error => console.log(error))
+      /*
+      instance.post('/publish', this.newArticle)
+      .then(this.$router.push('/feed'))
+      .catch(error => console.log(error))*/
     }
   },
   created() {

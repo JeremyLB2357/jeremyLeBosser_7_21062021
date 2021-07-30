@@ -13,10 +13,6 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(User, {foreignKey: 'userId' });
       this.hasMany(Comment, {foreignKey: 'articleId' })
     }
-
-    toJSON(){
-      return { ...this.get(), userId: undefined };
-    }
   };
   Article.init({
     articleId: {

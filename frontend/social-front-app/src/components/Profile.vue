@@ -86,9 +86,11 @@ export default {
                 email: this.newEmail,
                 password: this.newPassword
             }
-            instance.put(`/profile/${this.$store.state.user.userId}`, {
+            instance.put('/profile/' + this.$store.state.user.userId, {
                 newUser
             })
+            .then(console.log('ok'))
+            .catch(console.log('pas ok'))
         }
     }
 }
