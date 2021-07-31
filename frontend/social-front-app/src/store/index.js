@@ -35,16 +35,20 @@ export default createStore({
   },
   actions: {
     createAccount: ({commit}, userInfo) => {
-      commit('setStatus', 'loading');
-      instance.post('/signup', userInfo)
-      .then(response => {
-        commit('setStatus', 'created');
-        console.log(response);
+      return new Promise((resolve, reject) => {
+        commit('setStatus', 'loading');
+        instance.post('/signup', userInfo)
+        .then(() => {
+          commit('setStatus', 'created');
+          resolve();
+        })
+        .catch(error => {
+          commit('setStatus', 'error_create');
+          console.log(error);
+          reject();
+        })
       })
-      .catch(error => {
-        commit('setStatus', 'error_create');
-        console.log(error);
-      })
+        
     },
     login: ({commit}, userInfo) => {
       return new Promise((resolve, reject) => {

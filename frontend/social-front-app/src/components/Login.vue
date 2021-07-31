@@ -56,16 +56,16 @@ export default {
         switchToLogin(){
             this.mode = 'login';
         },
-        createAccount(){
-            this.$store.dispatch('createAccount', {
+        async createAccount(){
+            await this.$store.dispatch('createAccount', {
                 lastName: this.lastName,
                 firstName: this.firstName,
                 email: this.email,
                 password: this.password
             })
-            .then(() => {
-                this.login();
-            })
+            console.log('avant login');
+            debugger;
+            this.login();
         },
         async login(){
             
