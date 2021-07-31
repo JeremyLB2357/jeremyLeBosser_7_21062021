@@ -1,10 +1,14 @@
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 
-const { Article, Comment } = require('../models');
+const { Article, Comment, User } = require('../models');
 
 exports.showAll = (req, res, next) => {
-    Article.findAll({ include: Comment })
+    Article.findAll({ 
+        include: [
+            {model: Comment, include: User}, {model: User}
+        ] 
+    })
     .then((articles) => res.status(200).json(articles))
     .catch(error => res.status(400).json(error))
 };
@@ -31,12 +35,18 @@ exports.publish = (req, res, next) => {
 exports.deleteArticle = (req, res, next) => {
     Article.findOne({ where: { articleId: req.params.id} })
     .then(article => {
-        const filename = article.imageUrl.split('/images/')[1];
+        
         Article.destroy({ where: { articleId: req.params.id }})
         .then(() => {
-            fs.unlink(`images/${filename}`, () => {
+            if (article.imageUrl == null){
                 res.status(200).json({ message: 'suppression faite' });
-            })
+            }
+            else {
+                const filename = article.imageUrl.split('/images/')[1];
+                fs.unlink(`public/images/${filename}`, () => {
+                    res.status(200).json({ message: 'suppression faite' });
+                })
+            }
         })
         .catch(error => res.status(400).json(error));
     })

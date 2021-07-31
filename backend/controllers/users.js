@@ -35,13 +35,13 @@ exports.login = (req, res, next) => {
                 return users[i].email;
             }
         }
-        throw 'utilisateur inconnu !';
+        throw 'utilisateur inconnu 1!';
     })
     .then(cryptedUser => {      //on va chercher l'utilisateur qui essaie de se connecter
         User.findOne({ where: { email: cryptedUser } })
         .then( user => {
             if (!user) {
-                return res.status(401).json({ error: 'utilisateur inconnu !' });
+                return res.status(401).json({ error: 'utilisateur inconnu 2!' });
             } else {
                 //on vérifie le mot de passe renseigné
                 bcrypt.compare(req.body.password, user.password)

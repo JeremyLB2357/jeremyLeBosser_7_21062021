@@ -14,6 +14,11 @@ export default {
   name: 'Pageperso',
   components: {
     Profile
+  },
+  data() {
+    return {
+      
+    }
   }
 }
 </script>

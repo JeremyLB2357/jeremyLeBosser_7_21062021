@@ -1,19 +1,10 @@
 <template>
-    <div class="article">
-        <h2>{{ title }} - like {{ likes }}</h2>
+    <div class="comment">
         <p>{{ content }}</p>
-        <div v-if="imageUrl !== null"><img v-bind:src="imageUrl"></div>
-        <cite>rédigé par {{ userArticle }} le {{ dateFormatee }}</cite>
+        <cite>rédigé par {{ userComment }} le {{ dateFormatee }}</cite><span> - like {{ likes }}</span>
         <button @click="like"><i class="fas fa-heart"></i></button>
-        <button v-if="userId == user.userId || $store.state.rigth == 'admin'" @click="cancel"><i class="fas fa-trash-alt"></i></button>
-        <div class="form">
-            <p>Envie de commenter ?</p>
-            <div class="input_content">
-                <textarea v-model="newComment.content" name="new_com" id="new_com"></textarea>
-            </div>
-          <button class="btn" @click="commentArticle">Commentez !</button>
-    </div>
-    </div>
+        <button v-if="userComment == user.userId || $store.state.rigth == 'admin'" @click="cancel"><i class="fas fa-trash-alt"></i></button>
+    </div>  
 </template>
 
 <script>
@@ -26,12 +17,11 @@ const instance = axios.create({
 import { mapState } from 'vuex';
 
 export default {
-    name: 'Article',
-    props: ['articleId', 'title', 'content', 'imageUrl', 'userArticle', 'date', 'likes', 'arrayOfLikes', 'userId'],
+    name: 'Comment',
+    props: ['commentId', 'content', 'userComment', 'date', 'likes', 'arrayOfLikes'],
     data() {
         return {
-            userlike: false,
-            newComment : { content: 'Votre commentaire ici', articleId: this.articleId },
+            userlike: false
         }
     },
     computed: {
@@ -46,34 +36,24 @@ export default {
     methods: {
         like(){
             if (this.userlike == true) {
-                instance.post('/article/like/' + this.articleId, {
+                instance.post('/comment/like/' + this.commentId, {
                     like: 0
                 })
             }
             if (this.userlike == false) {
-                instance.post('/article/like/' + this.articleId, {
+                instance.post('/comment/like/' + this.commentId, {
                     like: 1
                 })
             }
         },
         cancel(){
-            instance.delete('/article/' + this.articleId)
+            instance.delete('/comment/' + this.commentId)
             .then (alert('suppression réussie'))
             .catch (error => console.log(error))
-        },
-        commentArticle(){
-            instance.post('/comment/', this.newComment)
-            .then(()=> {
-                console.log('test');
-                debugger;
-                this.$router.push({name:'Feed'}, () => console.log('bien redirigé'), (error)=> console.log(error));
-            })
-            .catch(error => console.log(error))
-        },
-        
+        }
     },
     mounted(){
-        instance.defaults.headers.common['Authorization'] = 'BEARER '+ this.user.token;
+        instance.defaults.headers.common['Authorization'] = 'BEARER ' + this.user.token;
         if(this.arrayOfLikes !== null ){
             const arrayUser = this.arrayOfLikes.split(',');
             for (let i in arrayUser){
@@ -93,18 +73,16 @@ $color3: #464F51;
 $color-police: #000009;
 $color2: #0FF4C6;
 
-.article {
+.comment {
+    position: relative;
+    bottom: 1rem;
+    left: 2rem;
     background-color: $color-background-item;
     margin: 1rem auto 1rem auto;
     padding-bottom: 1rem;
-    width: 50%;
-    min-width: 20rem;
+    width: 40%;
+    min-width: 15rem;
     border-radius: 5rem;
     border: 0.1rem solid $color1;
-}
-
-img {
-    width: 15em;
-    height: 15em;
 }
 </style>

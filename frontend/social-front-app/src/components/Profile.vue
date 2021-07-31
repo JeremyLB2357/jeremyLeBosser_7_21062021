@@ -1,32 +1,127 @@
 <template>
     <div class="profile">
-        <ul>
-            <li>Nom</li>
-            <li>Prémon</li>
-            <li>Mail</li>
-            <li>Info: {{ info }}</li>
-        </ul>
+        <h2>{{ lastName }} {{ firstName }}</h2>
+        <p> Votre adresse email: {{ email }}</p>
+        <div>
+            <button class="btn" @click="changePassword">modifier vos infos</button>
+        </div>
+        <div v-if="modify == true">
+            <div class="input_content">
+                <label for="newLastName">Nom: </label>
+                <input type="text" v-model="newLastName" name="newLastName" id="newLastName">
+            </div>
+            <div class="input_content">
+                <label for="newFirstName">Prénom: </label>
+                <input type="text" v-model="newFirstName" name="newFirstName" id="newFirstName">
+            </div>
+            <div class="input_content">
+                <label for="newEmail">Email: </label>
+                <input type="text" v-model="newEmail" name="newEmail" id="newEmail">
+            </div>
+            <div class="input_content">
+                <label for="newPassword">Mot de passe: </label>
+                <input type="text" v-model="newPassword" name="newPassword" id="newPassword">
+            </div>
+            <button class="btn" @click="updateProfile">Envoyer les modifications</button>
+        </div>
+        <div>
+            <button class="btn" @click="disconnect">Se déconnecter</button>
+        </div>
+        
     </div>
 </template>
 
 <script>
-const axios = require('axios').default;
+const axios = require('axios');
+
+const instance = axios.create({
+  baseURL: 'http://localhost:3000/api/'
+})
 
 export default {
     name: 'Profile',
     data() {
         return {
-            info: null
+            lastName: '',
+            firstName: '',
+            email: '',
+            modify: false,
+            newLastName: '',
+            newFirstName: '',
+            newEmail: '',
+            newPassword: ''
         }
     },
     mounted() {
-        axios
-            .get('http://localhost:3000/api/profile/me?id=67bb971a-673b-4240-9b1d-67080d4dc915')
-            .then(response => (this.info = response))
+        if (this.$store.state.user.userId == -1) {
+            this.$router.push('/');
+            return ;
+        }
+        instance.defaults.headers.common['Authorization'] = 'Bearer ' + JSON.parse(localStorage.getItem('user')).token;
+        instance.get(`/profile/${this.$store.state.user.userId}`)
+        .then(response => {
+            this.lastName = response.data.lastName;
+            this.firstName = response.data.firstName;
+            this.email = response.data.email;
+        })
+        .catch(error => console.log(error))
+
+    },
+    methods: {
+        disconnect(){
+            this.$store.dispatch('logout')
+            .then(this.$router.push('/'))
+        },
+        changePassword(){
+            if (this.modify == false) {
+                this.modify = true;
+            } else {
+                this.modify = false;
+            }
+        },
+        updateProfile(){
+            const newUser = {
+                lastName: this.newLastName,
+                firstName: this.newFirstName,
+                email: this.newEmail,
+                password: this.newPassword
+            }
+            instance.put('/profile/' + this.$store.state.user.userId, newUser)
+            .then(console.log('ok'))
+            .catch((error) => console.log('pas ok'+ error))
+        }
     }
 }
 </script>
 
 <style scoped lang="scss">
+$color1: #D68FD6;
+$color-background-item: #DEFFF2;
+$color3: #464F51;
+$color-police: #000009;
+$color2: #0FF4C6;
 
+.profile {
+    background-color: $color-background-item;
+    margin: auto;
+    width: 50%;
+    min-width: 20rem;
+    border-radius: 5rem;
+    border: 0.1rem solid $color1;
+}
+.btn {
+    border-radius: 1rem;
+    color: $color2;
+    background-color: $color3;
+    width: 8rem;
+    height: 3rem;
+    margin-bottom: 1rem;
+    &:hover {
+        color: $color1;
+        cursor: pointer;
+    }
+}
+.input_content {
+  margin-bottom: 0.5rem;
+}
 </style>
