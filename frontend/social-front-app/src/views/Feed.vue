@@ -15,9 +15,12 @@
       <button class="btn" @click="postArticle">Poster !</button>
     </div>
     <div v-for="item in articles" :key="item.articleId">
-      <Article v-bind:articleId="item.articleId" v-bind:title="item.title" v-bind:content="item.content" v-bind:imageUrl="item.imageUrl" v-bind:userArticle="item.userId" v-bind:date="item.updatedAt" v-bind:likes="item.likes"/>
+      <Article v-bind:articleId="item.articleId" v-bind:title="item.title" v-bind:content="item.content" 
+      v-bind:imageUrl="item.imageUrl" v-bind:userArticle="item.userId" v-bind:date="item.updatedAt" 
+      v-bind:likes="item.likes" v-bind:arrayOfLikes="item.usersLiked"/>
       <div v-for="elem in item.Comments" :key="elem.commentId">
-        <Comment v-bind:commentId="elem.commentId" v-bind:content="elem.content" v-bind:userComment="elem.userId" v-bind:date="elem.updatedAt" v-bind:likes="elem.likes"/>
+        <Comment v-bind:commentId="elem.commentId" v-bind:content="elem.content" v-bind:userComment="elem.userId" 
+        v-bind:date="elem.updatedAt" v-bind:likes="elem.likes" v-bind:arrayOfLikes="elem.usersLiked"/>
       </div>
     </div>
     
@@ -87,6 +90,7 @@ export default {
     
   },
   mounted() {
+    console.log(this.$store.state.user.userId);
     if (this.$store.state.user.userId == -1) {
             this.$router.push('/');
             return ;

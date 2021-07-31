@@ -17,6 +17,7 @@ export default createStore({
   mutations: {
     logUser(state, user){
       state.user = user;
+      console.log(state.user.userId);
       localStorage.setItem('user', JSON.stringify(user));
       instance.defaults.headers.common['Authorization'] = 'BEARER ' + user.token;
     },
@@ -46,19 +47,21 @@ export default createStore({
       })
     },
     login: ({commit}, userInfo) => {
-      commit('setStatus', 'loading');
-      instance.post('/login', userInfo)
-      .then(response => {
-        commit('setStatus', 'connected');
-        commit('logUser', response.data);
-        if(response.data.userId === 1){
-          commit('giveAllRigth');
-
-        }
-      })
-      .catch(error => {
-        commit('setStatus', 'error_login');
-        console.log(error);
+      return new Promise((resolve, reject) => {
+        commit('setStatus', 'loading');
+        instance.post('/login', userInfo)
+          .then(response => {
+            commit('setStatus', 'connected');
+            commit('logUser', response.data);
+            if(response.data.userId === 1)
+              commit('giveAllRigth');
+            resolve();
+          })
+          .catch(error => {
+            commit('setStatus', 'error_login');
+            console.log(error);
+            reject();
+          })
       })
     },
     logout: ({commit}) => {

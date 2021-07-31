@@ -1,10 +1,14 @@
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 
-const { Article, Comment } = require('../models');
+const { Article, Comment, User } = require('../models');
 
 exports.showAll = (req, res, next) => {
-    Article.findAll({ include: Comment })
+    Article.findAll({ 
+        include: [
+            {model: Comment, include: User}, {model: User}
+        ] 
+    })
     .then((articles) => res.status(200).json(articles))
     .catch(error => res.status(400).json(error))
 };

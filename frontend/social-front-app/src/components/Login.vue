@@ -67,15 +67,15 @@ export default {
                 this.login();
             })
         },
-        login(){
-            this.$store.dispatch('login', {
+        async login(){
+            
+            await this.$store.dispatch('login', {
                 email: this.email,
                 password: this.password
             })
-            .then(() => {
-                alert('test');
-                this.$router.push('/feed');
-            })
+            
+            this.$router.push({name:'Feed'}, () => console.log('bien redirigé'), (error)=> console.log(error));
+            
         }
     }
 }

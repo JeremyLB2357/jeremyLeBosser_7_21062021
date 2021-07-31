@@ -27,7 +27,7 @@ import { mapState } from 'vuex';
 
 export default {
     name: 'Article',
-    props: ['articleId', 'title', 'content', 'imageUrl', 'userArticle', 'date', 'likes'],
+    props: ['articleId', 'title', 'content', 'imageUrl', 'userArticle', 'date', 'likes', 'arrayOfLikes'],
     data() {
         return {
             userlike: false,
@@ -57,13 +57,25 @@ export default {
         },
         commentArticle(){
             instance.post('/comment/', this.newComment)
-            .then(this.$forceUpdate())
+            .then(()=> {
+                console.log('test');
+                debugger;
+                this.$router.push({name:'Feed'}, () => console.log('bien redirigé'), (error)=> console.log(error));
+            })
             .catch(error => console.log(error))
-        }
+        },
+        
     },
     mounted(){
         instance.defaults.headers.common['Authorization'] = 'BEARER '+ this.user.token;
-        console.log(this.imageUrl);
+        if(this.arrayOfLikes !== null ){
+            const arrayUser = this.arrayOfLikes.split(',');
+            for (let i in arrayUser){
+                if(arrayUser[i] == this.user.userId){
+                    this.userlike = true;
+                }
+            }
+        }
     }
 }
 </script>

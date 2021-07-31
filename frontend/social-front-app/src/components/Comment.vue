@@ -18,7 +18,7 @@ import { mapState } from 'vuex';
 
 export default {
     name: 'Comment',
-    props: ['commentId', 'content', 'userComment', 'date', 'likes'],
+    props: ['commentId', 'content', 'userComment', 'date', 'likes', 'arrayOfLikes'],
     data() {
         return {
             userlike: false
@@ -48,6 +48,14 @@ export default {
     },
     mounted(){
         instance.defaults.headers.common['Authorization'] = 'BEARER ' + this.user.token;
+        if(this.arrayOfLikes !== null ){
+            const arrayUser = this.arrayOfLikes.split(',');
+            for (let i in arrayUser){
+                if(arrayUser[i] == this.user.userId){
+                    this.userlike = true;
+                }
+            }
+        }
     }
 }
 </script>

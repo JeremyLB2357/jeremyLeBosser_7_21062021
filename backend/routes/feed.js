@@ -6,7 +6,7 @@ const multer = require('../middlewares/multer-config');
 const feedCtrl = require('../controllers/feed');
 const test = require('../middlewares/capture');
 
-router.post('/publish', multer, test, feedCtrl.publish);
+router.post('/publish', multer, feedCtrl.publish);
 router.post('/comment', feedCtrl.addComment);
 router.post('/article/like/:id', feedCtrl.likeArticle);
 router.post('/comment/like/:id', feedCtrl.likeComment);

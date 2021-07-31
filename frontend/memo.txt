@@ -2,9 +2,6 @@
 -> get all article
         faire une jointure lors de la requête histoire d'avoir le nom de l'utilisateur qui a posté
 -> enrichir la table en utilisant l'appli
--> intégrer les images si il y en a
-
-<img src="../../../../backend/public/images/jpg1626097844579.jpg" alt="testchat">
     
 
 checker si like déjà
@@ -17,7 +14,5 @@ expliquer les droit admin
 
 QUESTION : 
 -> dans profile axios.put génère un SELECT au lieu d'un UPDATE
-
 -> suppression d'article impossible
--> redirection qui ne fonctionne pas
-->
+
