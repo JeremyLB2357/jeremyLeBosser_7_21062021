@@ -63,8 +63,6 @@ export default {
                 email: this.email,
                 password: this.password
             })
-            console.log('avant login');
-            debugger;
             this.login();
         },
         async login(){

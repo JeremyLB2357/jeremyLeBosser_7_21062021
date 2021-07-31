@@ -65,25 +65,29 @@ export default {
     uploadFile(event){
       this.file = event.target.files[0];
     },
-    postArticle(){
+    async postArticle(){
       const formData = new FormData();
-      const config = {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      }
+      
       formData.append('image', this.file);
       formData.append('title', this.newArticle.title);
       formData.append('content', this.newArticle.content);
 
-      instance.post('/publish', formData, config)
-      .then(() => {
-        console.log('test');
-        this.$router.go();
+      await this.sendRequest(formData)
+      //this.$router.go();
+      this.$router.push({name:'Transition'}, () => console.log('bien redirigé'), (error)=> console.log(error));
+    },
+    sendRequest(formdata){
+      return new Promise((resolve, reject) => {
+        const config = {
+        headers: { 'Content-Type': 'multipart/form-data' }
+        };
+        instance.post('/publish', formdata, config)
+          .then(resolve())
+          .catch(error => {
+            console.log(error);
+            reject();
+          })
       })
-      .catch(error => console.log(error))
-      /*
-      instance.post('/publish', this.newArticle)
-      .then(this.$router.push('/feed'))
-      .catch(error => console.log(error))*/
     }
   },
   created() {
