@@ -53,6 +53,7 @@ export default createStore({
         commit('logUser', response.data);
         if(response.data.userId === 1){
           commit('giveAllRigth');
+
         }
       })
       .catch(error => {

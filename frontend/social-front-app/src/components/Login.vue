@@ -73,6 +73,7 @@ export default {
                 password: this.password
             })
             .then(() => {
+                alert('test');
                 this.$router.push('/feed');
             })
         }

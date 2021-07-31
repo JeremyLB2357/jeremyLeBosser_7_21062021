@@ -2,6 +2,7 @@
     <div class="article">
         <h2>{{ title }} - like {{ likes }}</h2>
         <p>{{ content }}</p>
+        <div><img v-bind:src="imageUrl"></div>
         <cite>rédigé par {{ userArticle }} le {{ date }}</cite>
         <button @click="like"><i class="fas fa-heart"></i></button>
         <button v-if="userArticle == user.userId || $store.state.rigth == 'admin'" @click="cancel"><i class="fas fa-trash-alt"></i></button>
@@ -26,11 +27,11 @@ import { mapState } from 'vuex';
 
 export default {
     name: 'Article',
-    props: ['articleId', 'title', 'content', 'userArticle', 'date', 'likes'],
+    props: ['articleId', 'title', 'content', 'imageUrl', 'userArticle', 'date', 'likes'],
     data() {
         return {
             userlike: false,
-            newComment : { content: 'Votre commentaire ici', articleId: this.articleId }
+            newComment : { content: 'Votre commentaire ici', articleId: this.articleId },
         }
     },
     computed: {
@@ -62,6 +63,7 @@ export default {
     },
     mounted(){
         instance.defaults.headers.common['Authorization'] = 'BEARER '+ this.user.token;
+        console.log(this.imageUrl);
     }
 }
 </script>
@@ -81,5 +83,10 @@ $color2: #0FF4C6;
     min-width: 20rem;
     border-radius: 5rem;
     border: 0.1rem solid $color1;
+}
+
+img {
+    width: 15em;
+    height: 15em;
 }
 </style>

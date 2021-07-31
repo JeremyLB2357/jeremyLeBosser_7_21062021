@@ -1,7 +1,6 @@
 
 -> get all article
         faire une jointure lors de la requête histoire d'avoir le nom de l'utilisateur qui a posté
--> faire un droit admin pour supprimer tout les posts
 -> enrichir la table en utilisant l'appli
 -> intégrer les images si il y en a
 

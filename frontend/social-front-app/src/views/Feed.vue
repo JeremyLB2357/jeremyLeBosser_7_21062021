@@ -15,7 +15,7 @@
       <button class="btn" @click="postArticle">Poster !</button>
     </div>
     <div v-for="item in articles" :key="item.articleId">
-      <Article v-bind:articleId="item.articleId" v-bind:title="item.title" v-bind:content="item.content" v-bind:userArticle="item.userId" v-bind:date="item.updatedAt" v-bind:likes="item.likes"/>
+      <Article v-bind:articleId="item.articleId" v-bind:title="item.title" v-bind:content="item.content" v-bind:imageUrl="item.imageUrl" v-bind:userArticle="item.userId" v-bind:date="item.updatedAt" v-bind:likes="item.likes"/>
       <div v-for="elem in item.Comments" :key="elem.commentId">
         <Comment v-bind:commentId="elem.commentId" v-bind:content="elem.content" v-bind:userComment="elem.userId" v-bind:date="elem.updatedAt" v-bind:likes="elem.likes"/>
       </div>
@@ -72,7 +72,10 @@ export default {
       formData.append('content', this.newArticle.content);
 
       instance.post('/publish', formData, config)
-      .then(this.$router.push('/feed'))
+      .then(() => {
+        console.log('test');
+        this.$router.go();
+      })
       .catch(error => console.log(error))
       /*
       instance.post('/publish', this.newArticle)
