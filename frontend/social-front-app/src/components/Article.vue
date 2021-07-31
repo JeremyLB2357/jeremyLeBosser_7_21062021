@@ -2,10 +2,10 @@
     <div class="article">
         <h2>{{ title }} - like {{ likes }}</h2>
         <p>{{ content }}</p>
-        <div><img v-bind:src="imageUrl"></div>
-        <cite>rédigé par {{ userArticle }} le {{ date }}</cite>
+        <div v-if="imageUrl !== null"><img v-bind:src="imageUrl"></div>
+        <cite>rédigé par {{ userArticle }} le {{ dateFormatee }}</cite>
         <button @click="like"><i class="fas fa-heart"></i></button>
-        <button v-if="userArticle == user.userId || $store.state.rigth == 'admin'" @click="cancel"><i class="fas fa-trash-alt"></i></button>
+        <button v-if="userId == user.userId || $store.state.rigth == 'admin'" @click="cancel"><i class="fas fa-trash-alt"></i></button>
         <div class="form">
             <p>Envie de commenter ?</p>
             <div class="input_content">
@@ -27,7 +27,7 @@ import { mapState } from 'vuex';
 
 export default {
     name: 'Article',
-    props: ['articleId', 'title', 'content', 'imageUrl', 'userArticle', 'date', 'likes', 'arrayOfLikes'],
+    props: ['articleId', 'title', 'content', 'imageUrl', 'userArticle', 'date', 'likes', 'arrayOfLikes', 'userId'],
     data() {
         return {
             userlike: false,
@@ -35,7 +35,13 @@ export default {
         }
     },
     computed: {
-        ...mapState(['user'])
+        ...mapState(['user']),
+        dateFormatee() {
+            const date = this.date;
+            const newDate = date.split('T')[0].split('-')[2] + '/' + date.split('T')[0].split('-')[1] + '/' + date.split('T')[0].split('-')[0]
+      + ' à ' + date.split('T')[1].split(':')[0] + 'h' + date.split('T')[1].split(':')[1];
+      return newDate
+        }
     },
     methods: {
         like(){

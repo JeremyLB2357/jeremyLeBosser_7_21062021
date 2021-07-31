@@ -1,7 +1,7 @@
 <template>
     <div class="comment">
         <p>{{ content }}</p>
-        <cite>rédigé par {{ userComment }} le {{ date }}</cite><span>- like {{ likes }}</span>
+        <cite>rédigé par {{ userComment }} le {{ dateFormatee }}</cite><span> - like {{ likes }}</span>
         <button @click="like"><i class="fas fa-heart"></i></button>
         <button v-if="userComment == user.userId || $store.state.rigth == 'admin'" @click="cancel"><i class="fas fa-trash-alt"></i></button>
     </div>  
@@ -25,7 +25,13 @@ export default {
         }
     },
     computed: {
-        ...mapState(['user'])
+        ...mapState(['user']),
+        dateFormatee() {
+            const date = this.date;
+            const newDate = date.split('T')[0].split('-')[2] + '/' + date.split('T')[0].split('-')[1] + '/' + date.split('T')[0].split('-')[0]
+      + ' à ' + date.split('T')[1].split(':')[0] + 'h' + date.split('T')[1].split(':')[1];
+      return newDate
+        }
     },
     methods: {
         like(){

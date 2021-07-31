@@ -35,12 +35,18 @@ exports.publish = (req, res, next) => {
 exports.deleteArticle = (req, res, next) => {
     Article.findOne({ where: { articleId: req.params.id} })
     .then(article => {
-        const filename = article.imageUrl.split('/images/')[1];
+        
         Article.destroy({ where: { articleId: req.params.id }})
         .then(() => {
-            fs.unlink(`images/${filename}`, () => {
+            if (article.imageUrl == null){
                 res.status(200).json({ message: 'suppression faite' });
-            })
+            }
+            else {
+                const filename = article.imageUrl.split('/images/')[1];
+                fs.unlink(`public/images/${filename}`, () => {
+                    res.status(200).json({ message: 'suppression faite' });
+                })
+            }
         })
         .catch(error => res.status(400).json(error));
     })

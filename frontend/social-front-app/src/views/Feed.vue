@@ -16,10 +16,10 @@
     </div>
     <div v-for="item in articles" :key="item.articleId">
       <Article v-bind:articleId="item.articleId" v-bind:title="item.title" v-bind:content="item.content" 
-      v-bind:imageUrl="item.imageUrl" v-bind:userArticle="item.userId" v-bind:date="item.updatedAt" 
-      v-bind:likes="item.likes" v-bind:arrayOfLikes="item.usersLiked"/>
+      v-bind:imageUrl="item.imageUrl" v-bind:userArticle="item.User.lastName + ' ' + item.User.firstName" v-bind:date="item.updatedAt" 
+      v-bind:likes="item.likes" v-bind:arrayOfLikes="item.usersLiked" v-bind:userId="item.userId"/>
       <div v-for="elem in item.Comments" :key="elem.commentId">
-        <Comment v-bind:commentId="elem.commentId" v-bind:content="elem.content" v-bind:userComment="elem.userId" 
+        <Comment v-bind:commentId="elem.commentId" v-bind:content="elem.content" v-bind:userComment="elem.User.lastName + ' ' + elem.User.firstName" 
         v-bind:date="elem.updatedAt" v-bind:likes="elem.likes" v-bind:arrayOfLikes="elem.usersLiked"/>
       </div>
     </div>
