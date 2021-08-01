@@ -6,7 +6,8 @@ module.exports = {
         type: DataTypes.INTEGER,
         allowNull: false,
         autoIncrement: true,
-        primaryKey: true
+        primaryKey: true,
+        onDelete: 'CASCADE'
       },
       title: {
         type: DataTypes.STRING,
@@ -22,7 +23,8 @@ module.exports = {
         references: {
             model: 'Users',
             key: 'userId'
-        }
+        },
+        onDelete: 'CASCADE'
       },
       imageUrl: {
         type: DataTypes.STRING

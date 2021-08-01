@@ -1,9 +1,11 @@
 <template>
     <div class="comment">
         <p>{{ content }}</p>
-        <cite>rédigé par {{ userComment }} le {{ dateFormatee }}</cite><span> - like {{ likes }}</span>
-        <button @click="like"><i class="fas fa-heart"></i></button>
-        <button v-if="userComment == user.userId || $store.state.rigth == 'admin'" @click="cancel"><i class="fas fa-trash-alt"></i></button>
+        <cite>rédigé par {{ userComment }} le {{ dateFormatee }}</cite>
+        <div>
+            <button class="btn-interne" @click="like">{{ likes }} <i class="fas fa-heart"></i></button>
+            <button class="btn-interne" v-if="userComment == user.userId || $store.state.rigth == 'admin'" @click="cancel"><i class="fas fa-trash-alt"></i></button>
+        </div>
     </div>  
 </template>
 
@@ -39,16 +41,25 @@ export default {
                 instance.post('/comment/like/' + this.commentId, {
                     like: 0
                 })
+                .then(()=> {
+                    this.$router.push({name:'Transition'}, () => console.log('bien redirigé'), (error)=> console.log(error));
+                })
             }
             if (this.userlike == false) {
                 instance.post('/comment/like/' + this.commentId, {
                     like: 1
+                })
+                .then(()=> {
+                    this.$router.push({name:'Transition'}, () => console.log('bien redirigé'), (error)=> console.log(error));
                 })
             }
         },
         cancel(){
             instance.delete('/comment/' + this.commentId)
             .then (alert('suppression réussie'))
+            .then(()=> {
+                    this.$router.push({name:'Transition'}, () => console.log('bien redirigé'), (error)=> console.log(error));
+                })
             .catch (error => console.log(error))
         }
     },
@@ -83,6 +94,21 @@ $color2: #0FF4C6;
     width: 40%;
     min-width: 15rem;
     border-radius: 5rem;
-    border: 0.1rem solid $color1;
+    border: 0.2rem solid $color1;
+}
+.btn-interne {
+    color: $color2;
+    background-color: $color3;
+    margin: 0.4em;
+    border-radius: 5rem;
+    width: 3rem;
+    height: 2rem;
+    &:hover {
+        color: $color-background-item;
+    }
+}
+
+cite {
+    font-size: 0.8rem;
 }
 </style>

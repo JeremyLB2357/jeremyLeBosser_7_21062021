@@ -17,7 +17,6 @@ export default createStore({
   mutations: {
     logUser(state, user){
       state.user = user;
-      console.log(state.user.userId);
       localStorage.setItem('user', JSON.stringify(user));
       instance.defaults.headers.common['Authorization'] = 'BEARER ' + user.token;
     },

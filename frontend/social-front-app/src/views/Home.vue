@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
+    <img class="logo" alt="Vue logo" src="../assets/icon-above-font.svg">
     <Login/>
   </div>
 </template>
@@ -25,4 +25,8 @@ $color3: #464F51;
 $color-police: #000009;
 $color2: #0FF4C6;
 
+.logo {
+  max-width: 10em;
+  max-height: 10em;
+}
 </style>

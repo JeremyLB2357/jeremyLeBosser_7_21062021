@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img alt="Vue logo" src="../assets/logo.png">
+    <img class="logo" alt="Vue logo" src="../assets/icon-above-font.svg">
     <div class="form">
       <p>Envie de partager quelque chose ?</p>
       <div class="input_content">
@@ -18,7 +18,7 @@
       <Article v-bind:articleId="item.articleId" v-bind:title="item.title" v-bind:content="item.content" 
       v-bind:imageUrl="item.imageUrl" v-bind:userArticle="item.User.lastName + ' ' + item.User.firstName" v-bind:date="item.updatedAt" 
       v-bind:likes="item.likes" v-bind:arrayOfLikes="item.usersLiked" v-bind:userId="item.userId"/>
-      <div v-for="elem in item.Comments" :key="elem.commentId">
+      <div class="commentaire" v-for="elem in item.Comments" :key="elem.commentId">
         <Comment v-bind:commentId="elem.commentId" v-bind:content="elem.content" v-bind:userComment="elem.User.lastName + ' ' + elem.User.firstName" 
         v-bind:date="elem.updatedAt" v-bind:likes="elem.likes" v-bind:arrayOfLikes="elem.usersLiked"/>
       </div>
@@ -94,7 +94,6 @@ export default {
     
   },
   mounted() {
-    console.log(this.$store.state.user.userId);
     if (this.$store.state.user.userId == -1) {
             this.$router.push('/');
             return ;
@@ -113,6 +112,10 @@ $color3: #464F51;
 $color-police: #000009;
 $color2: #0FF4C6;
 
+.logo {
+  max-width: 10em;
+  max-height: 10em;
+}
 .form {
     background-color: $color-background-item;
     margin: auto;
@@ -121,7 +124,7 @@ $color2: #0FF4C6;
     width: 50%;
     min-width: 20rem;
     border-radius: 5rem;
-    border: 0.1rem solid $color1;
+    border: 0.2rem solid $color1;
     margin-bottom: 0.5rem;;
 }
 .input_content {
@@ -141,5 +144,10 @@ $color2: #0FF4C6;
         color: $color1;
         cursor: pointer;
     }
+}
+.commentaire {
+  position: relative;
+  bottom: 1rem;
+  left: 2rem;
 }
 </style>

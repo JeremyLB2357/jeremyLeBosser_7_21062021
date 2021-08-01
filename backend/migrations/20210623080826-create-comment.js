@@ -25,7 +25,8 @@ module.exports = {
         references: {
             model: 'Articles',
             key: 'articleId'
-        }
+        },
+        onDelete: 'CASCADE'
       },
       usersLiked: {
         type: DataTypes.TEXT

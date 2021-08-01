@@ -10,9 +10,6 @@
 export default {
     name: 'Transition',
     methods: {
-        /*redirectToFeed(){
-            this.$router.push({name:'Feed'}, () => console.log('bien redirigé'), (error)=> console.log(error));
-        }*/
     },
     mounted(){
         this.$router.push({name:'Feed'});

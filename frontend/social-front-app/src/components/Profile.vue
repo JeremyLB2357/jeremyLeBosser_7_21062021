@@ -87,8 +87,8 @@ export default {
                 password: this.newPassword
             }
             instance.put('/profile/' + this.$store.state.user.userId, newUser)
-            .then(console.log('ok'))
-            .catch((error) => console.log('pas ok'+ error))
+            .then(alert('les modifications ont été prises en compte'))
+            .catch((error) => console.log(error))
         }
     }
 }

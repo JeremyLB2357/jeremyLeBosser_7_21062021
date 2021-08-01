@@ -40,6 +40,13 @@ app.use((req, res, next) => {
     next();
 });
 
+async function majDB() {
+    await sequelize.sync({ force: true });
+    console.log("All models were synchronized successfully.");
+}
+
+//majDB();
+
 
 app.use('/images', express.static(path.join(__dirname, 'public/images')));
 app.use('/api/auth', userRoutes);
