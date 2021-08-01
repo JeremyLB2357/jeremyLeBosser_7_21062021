@@ -6,6 +6,7 @@
             <button class="btn" @click="changePassword">modifier vos infos</button>
         </div>
         <div v-if="modify == true">
+            <p>Les champs vides ne sont pas pris en compte</p>
             <div class="input_content">
                 <label for="newLastName">Nom: </label>
                 <input type="text" v-model="newLastName" name="newLastName" id="newLastName">
@@ -80,12 +81,21 @@ export default {
             }
         },
         updateProfile(){
-            const newUser = {
-                lastName: this.newLastName,
-                firstName: this.newFirstName,
-                email: this.newEmail,
-                password: this.newPassword
+            const newUser = new Object;
+            if (this.newLastName !== ''){
+                newUser.lastName = this.newLastName;
             }
+            if (this.newFirstName !== ''){
+                newUser.firstName = this.newFirstName;
+            }
+            if (this.newEmail !== ''){
+                newUser.email = this.newEmail;
+            }
+            if (this.newPassword !== ''){
+                newUser.password = this.newPassword;
+            }
+            //console.log('/profile/' + this.$store.state.user.userId);
+            
             instance.put('/profile/' + this.$store.state.user.userId, newUser)
             .then(alert('les modifications ont été prises en compte'))
             .catch((error) => console.log(error))
