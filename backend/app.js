@@ -11,7 +11,6 @@ const app = express();
 const userRoutes = require('./routes/users');
 const feedRoutes = require('./routes/feed');
 const profileRoutes = require('./routes/profile');
-const testRoutes = require('./routes/test');
 
 //connection à la BDD
 const connectBDD = require('./src/database/connection');

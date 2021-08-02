@@ -12,7 +12,7 @@ export default {
     methods: {
     },
     mounted(){
-        this.$router.push({name:'Feed'});
+        this.$router.go(-1);
     }
 }
 

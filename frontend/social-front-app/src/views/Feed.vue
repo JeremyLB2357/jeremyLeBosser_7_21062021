@@ -20,7 +20,7 @@
       v-bind:likes="item.likes" v-bind:arrayOfLikes="item.usersLiked" v-bind:userId="item.userId"/>
       <div class="commentaire" v-for="elem in item.Comments" :key="elem.commentId">
         <Comment v-bind:commentId="elem.commentId" v-bind:content="elem.content" v-bind:userComment="elem.User.lastName + ' ' + elem.User.firstName" 
-        v-bind:date="elem.updatedAt" v-bind:likes="elem.likes" v-bind:arrayOfLikes="elem.usersLiked"/>
+        v-bind:date="elem.updatedAt" v-bind:likes="elem.likes" v-bind:arrayOfLikes="elem.usersLiked" v-bind:userId="elem.userId"/>
       </div>
     </div>
     
@@ -149,5 +149,8 @@ $color2: #0FF4C6;
   position: relative;
   bottom: 1rem;
   left: 2rem;
+}
+#image {
+  margin-bottom: 1rem;
 }
 </style>

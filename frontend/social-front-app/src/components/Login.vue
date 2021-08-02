@@ -17,7 +17,7 @@
                 <input type="email" name="email" id="email" v-model="email" placeholder="Adresse email">
             </div>
             <div class="form">
-                <input type="text" name="password" id="password" v-model="password" placeholder="Votre mot de passe">
+                <input type="password" name="password" id="password" v-model="password" placeholder="Votre mot de passe">
             </div>
             <div>
                 <button class="btn" v-if="mode == 'login'" @click="login">Se connecter</button>

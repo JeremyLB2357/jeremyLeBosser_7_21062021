@@ -23,7 +23,7 @@ exports.toArticle = (req, res, next) => {
     const userId = decodedToken.userId;
     Article.findOne({ where: {articleId: req.params.id} })
         .then(article => {
-            if (userId == article.userId) {
+            if (userId == article.userId || userId == 1) {
                 next();
             } else {
                 res.status(401).json({ error: 'demande non authorisée' });
@@ -38,7 +38,7 @@ exports.toComment = (req, res, next) => {
     const userId = decodedToken.userId;
     Comment.findOne({ where: {commentId: req.params.id} })
         .then(comment => {
-            if (userId == comment.userId) {
+            if (userId == comment.userId || userId == 1) {
                 next();
             } else {
                 res.status(401).json({ error: 'demande non authorisée' });

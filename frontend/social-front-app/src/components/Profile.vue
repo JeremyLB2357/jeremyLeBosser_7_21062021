@@ -98,6 +98,9 @@ export default {
             
             instance.put('/profile/' + this.$store.state.user.userId, newUser)
             .then(alert('les modifications ont été prises en compte'))
+            .then(()=> {
+                    this.$router.push({name:'Transition'}, () => console.log('bien redirigé'), (error)=> console.log(error));
+                })
             .catch((error) => console.log(error))
         }
     }

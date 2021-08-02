@@ -4,7 +4,7 @@
         <cite>rédigé par {{ userComment }} le {{ dateFormatee }}</cite>
         <div>
             <button class="btn-interne" @click="like">{{ likes }} <i class="fas fa-heart"></i></button>
-            <button class="btn-interne" v-if="userComment == user.userId || $store.state.rigth == 'admin'" @click="cancel"><i class="fas fa-trash-alt"></i></button>
+            <button class="btn-interne" v-if="userId == user.userId || $store.state.rigth == 'admin'" @click="cancel"><i class="fas fa-trash-alt"></i></button>
         </div>
     </div>  
 </template>
@@ -20,7 +20,7 @@ import { mapState } from 'vuex';
 
 export default {
     name: 'Comment',
-    props: ['commentId', 'content', 'userComment', 'date', 'likes', 'arrayOfLikes'],
+    props: ['commentId', 'content', 'userComment', 'date', 'likes', 'arrayOfLikes', 'userId'],
     data() {
         return {
             userlike: false

@@ -7,7 +7,10 @@ exports.showAll = (req, res, next) => {
     Article.findAll({ 
         include: [
             {model: Comment, include: User}, {model: User}
-        ] 
+        ],
+        order: [
+            ['articleId', 'DESC']
+        ]
     })
     .then((articles) => res.status(200).json(articles))
     .catch(error => res.status(400).json(error))
